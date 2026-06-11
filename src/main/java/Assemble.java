@@ -14,7 +14,7 @@ public class Assemble {
     private static final int MANDO = 1, CONTINENTAL = 2, BOSCH_B = 3;
     private static final int BOSCH_S = 1, MOBIS = 2;
 
-    private static int[] stack = new int[5];
+    static int[] stack = new int[5];
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -209,7 +209,7 @@ public class Assemble {
     }
 
 
-    private static boolean isValidCheck() {
+    static boolean isValidCheck() {
         if (stack[CarType_Q] == SEDAN && stack[BrakeSystem_Q] == CONTINENTAL) return false;
         if (stack[CarType_Q] == SUV   && stack[Engine_Q] == TOYOTA)       return false;
         if (stack[CarType_Q] == TRUCK && stack[Engine_Q] == WIA)          return false;
@@ -218,7 +218,7 @@ public class Assemble {
         return true;
     }
 
-    private static void runProducedCar() {
+    static void runProducedCar() {
         if (!isValidCheck()) {
             System.out.println("자동차가 동작되지 않습니다");
             return;

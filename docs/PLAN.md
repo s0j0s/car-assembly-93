@@ -39,34 +39,25 @@
 > 기존 `Assemble.java` 코드 기준. 리팩토링 후 테스트가 깨지면 안전망 역할.
 
 ### 2-1. 테스트 클래스 생성
-- [ ] `src/test/java/AssembleTest.java` 생성
-- [ ] `@BeforeEach` 에서 `stack` 초기화 방법 결정
-  - `Assemble.stack` 접근 방식 검토 (현재 `private static`)
-  - 테스트 가능하도록 접근 제어자 `package-private` 으로 변경 여부 결정
+- [x] `src/test/java/AssembleTest.java` 생성
+- [x] `@BeforeEach` 에서 `stack` 초기화 방법 결정
+  - `stack`, `isValidCheck()`, `runProducedCar()` → `package-private` 으로 변경
 
 ### 2-2. 호환성 실패 케이스 테스트
-- [ ] `sedan_with_continental_brake_fails`
-  - CarType=SEDAN, BrakeSystem=CONTINENTAL → `isValidCheck()` false
-- [ ] `suv_with_toyota_engine_fails`
-  - CarType=SUV, Engine=TOYOTA → `isValidCheck()` false
-- [ ] `truck_with_wia_engine_fails`
-  - CarType=TRUCK, Engine=WIA → `isValidCheck()` false
-- [ ] `truck_with_mando_brake_fails`
-  - CarType=TRUCK, BrakeSystem=MANDO → `isValidCheck()` false
-- [ ] `bosch_brake_requires_bosch_steering_fails`
-  - BrakeSystem=BOSCH, SteeringSystem=MOBIS → `isValidCheck()` false
+- [x] `sedan_with_continental_brake_fails`
+- [x] `suv_with_toyota_engine_fails`
+- [x] `truck_with_wia_engine_fails`
+- [x] `truck_with_mando_brake_fails`
+- [x] `bosch_brake_requires_bosch_steering_fails`
 
 ### 2-3. 정상 케이스 테스트
-- [ ] `valid_combination_passes`
-  - CarType=SEDAN, Engine=GM, BrakeSystem=MANDO, SteeringSystem=BOSCH → `isValidCheck()` true
-- [ ] `broken_engine_does_not_run`
-  - Engine=4 (BROKEN) → `runProducedCar()` 출력에 "고장" 포함 확인
+- [x] `valid_combination_passes`
+- [x] `broken_engine_does_not_run`
 
 ### 2-4. 테스트 실행 및 Coverage 측정
-- [ ] `./gradlew test` — 전체 통과 확인
-- [ ] `./gradlew jacocoTestReport` 실행
-- [ ] `build/reports/jacoco/test/html/index.html` coverage 확인
-- [ ] baseline coverage 수치 `CLAUDE.md`에 기록
+- [x] `./gradlew test` — 7개 전체 통과
+- [x] `./gradlew jacocoTestReport` 실행
+- [x] baseline coverage: Instructions 11%, Branches 16%
 
 ---
 

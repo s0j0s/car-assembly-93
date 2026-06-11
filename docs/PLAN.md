@@ -120,24 +120,25 @@
 ## Phase 5 — 호환성 규칙 분리
 
 ### 5-1. CompatibilityRule 인터페이스
-- [ ] `src/main/java/rule/CompatibilityRule.java`
+- [x] `src/main/java/rule/CompatibilityRule.java`
   - `@FunctionalInterface`
   - `Optional<String> check(Car car)` — 위반 시 메시지 반환
 
 ### 5-2. CompatibilityChecker 클래스
-- [ ] `src/main/java/rule/CompatibilityChecker.java`
+- [x] `src/main/java/rule/CompatibilityChecker.java`
   - `RULES` — 규칙 5개 `List<CompatibilityRule>` 정의
   - `List<String> validate(Car car)` — 위반 메시지 목록 반환
   - `boolean isValid(Car car)` — 전체 통과 여부
-- [ ] 기존 `isValidCheck()` 제거
-- [ ] 기존 `testProducedCar()` 중복 규칙 제거 → `CompatibilityChecker` 사용
+- [x] 기존 `isValidCheck()` 제거
+- [x] 기존 `testProducedCar()` 중복 규칙 제거 → `CompatibilityChecker` 사용
+- [x] `InterruptedException` → `Thread.currentThread().interrupt()` 복원
 
 ### 5-3. CompatibilityChecker 테스트 작성 (행동 기반 — 리팩토링 내성 있음)
-- [ ] `src/test/java/rule/CompatibilityCheckerTest.java`
-  - `Car` 객체 기준 — `stack` 직접 접근 없음
-  - 각 규칙별 독립 테스트 (5개 FAIL + 1개 PASS)
-- [ ] 기존 `AssembleTest.java` 제거 (구현 결합 임시 테스트)
-- [ ] `./gradlew test` 통과 확인
+- [x] `src/test/java/rule/CompatibilityCheckerTest.java`
+  - `Car` 객체 직접 생성 — `Assemble` 내부 무관
+  - 5개 FAIL + 4개 PASS + 3개 메시지 검증 (총 12개)
+- [x] 기존 `AssembleTest.java` 제거
+- [x] `./gradlew test` 전체 통과
 
 ---
 

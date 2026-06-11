@@ -1,9 +1,7 @@
-import model.BrakeSystem;
-import model.Car;
-import model.CarType;
-import model.Engine;
-import model.SteeringSystem;
+import model.*;
+import rule.CompatibilityChecker;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Assemble {
@@ -16,6 +14,7 @@ public class Assemble {
     private static final int Run_Test         = 4;
 
     static Car car = new Car();
+    private static final CompatibilityChecker checker = new CompatibilityChecker();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -190,22 +189,8 @@ public class Assemble {
         System.out.printf("%s 조향장치를 선택하셨습니다.%n", car.getSteeringSystem().displayName);
     }
 
-    static boolean isValidCheck() {
-        CarType        carType = car.getCarType();
-        Engine         engine  = car.getEngine();
-        BrakeSystem    brake   = car.getBrakeSystem();
-        SteeringSystem steer   = car.getSteeringSystem();
-
-        if (carType == CarType.SEDAN && brake  == BrakeSystem.CONTINENTAL) return false;
-        if (carType == CarType.SUV   && engine == Engine.TOYOTA)           return false;
-        if (carType == CarType.TRUCK && engine == Engine.WIA)              return false;
-        if (carType == CarType.TRUCK && brake  == BrakeSystem.MANDO)      return false;
-        if (brake   == BrakeSystem.BOSCH && steer != SteeringSystem.BOSCH) return false;
-        return true;
-    }
-
-    static void runProducedCar() {
-        if (!isValidCheck()) {
+    private static void runProducedCar() {
+        if (!checker.isValid(car)) {
             System.out.println("자동차가 동작되지 않습니다");
             return;
         }
@@ -221,35 +206,21 @@ public class Assemble {
         System.out.println("자동차가 동작됩니다.");
     }
 
-    static void testProducedCar() {
-        CarType        carType = car.getCarType();
-        Engine         engine  = car.getEngine();
-        BrakeSystem    brake   = car.getBrakeSystem();
-        SteeringSystem steer   = car.getSteeringSystem();
-
-        if (carType == CarType.SEDAN && brake == BrakeSystem.CONTINENTAL) {
-            fail("Sedan에는 Continental제동장치 사용 불가");
-        } else if (carType == CarType.SUV && engine == Engine.TOYOTA) {
-            fail("SUV에는 TOYOTA엔진 사용 불가");
-        } else if (carType == CarType.TRUCK && engine == Engine.WIA) {
-            fail("Truck에는 WIA엔진 사용 불가");
-        } else if (carType == CarType.TRUCK && brake == BrakeSystem.MANDO) {
-            fail("Truck에는 Mando제동장치 사용 불가");
-        } else if (brake == BrakeSystem.BOSCH && steer != SteeringSystem.BOSCH) {
-            fail("Bosch제동장치에는 Bosch조향장치 이외 사용 불가");
-        } else {
+    private static void testProducedCar() {
+        List<String> violations = checker.validate(car);
+        if (violations.isEmpty()) {
             System.out.println("자동차 부품 조합 테스트 결과 : PASS");
+        } else {
+            System.out.println("자동차 부품 조합 테스트 결과 : FAIL");
+            violations.forEach(System.out::println);
         }
-    }
-
-    private static void fail(String msg) {
-        System.out.println("자동차 부품 조합 테스트 결과 : FAIL");
-        System.out.println(msg);
     }
 
     private static void delay(int ms) {
         try {
             Thread.sleep(ms);
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }

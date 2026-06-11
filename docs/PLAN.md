@@ -80,22 +80,24 @@
 ## Phase 3 — enum 정의
 
 ### 3-1. CarType enum
-- [ ] `src/main/java/model/CarType.java`
+- [x] `src/main/java/model/CarType.java`
   - 값: `SEDAN`, `SUV`, `TRUCK`
   - 표시 이름 필드 (`displayName`)
 
 ### 3-2. Engine enum
-- [ ] `src/main/java/model/Engine.java`
+- [x] `src/main/java/model/Engine.java`
   - 값: `GM`, `TOYOTA`, `WIA`, `BROKEN`
   - `isBroken()` 메서드
 
 ### 3-3. BrakeSystem enum
-- [ ] `src/main/java/model/BrakeSystem.java`
+- [x] `src/main/java/model/BrakeSystem.java`
   - 값: `MANDO`, `CONTINENTAL`, `BOSCH`
 
 ### 3-4. SteeringSystem enum
-- [ ] `src/main/java/model/SteeringSystem.java`
+- [x] `src/main/java/model/SteeringSystem.java`
   - 값: `BOSCH`, `MOBIS`
+- [x] `Assemble.java` int 상수 블록 제거, enum + displayName 사용으로 교체
+- [x] `./gradlew test` 25개 전체 통과
 
 ---
 

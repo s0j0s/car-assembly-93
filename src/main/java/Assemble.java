@@ -152,7 +152,7 @@ public class Assemble {
         System.out.println("===============================");
     }
 
-    private static boolean isValidRange(int step, int ans) {
+    static boolean isValidRange(int step, int ans) {
         switch (step) {
             case CarType_Q:
                 if (ans < 1 || ans > 3) {
@@ -241,7 +241,7 @@ public class Assemble {
         System.out.println("자동차가 동작됩니다.");
     }
 
-    private static void testProducedCar() {
+    static void testProducedCar() {
         if (stack[CarType_Q] == SEDAN && stack[BrakeSystem_Q] == CONTINENTAL) {
             fail("Sedan에는 Continental제동장치 사용 불가");
         } else if (stack[CarType_Q] == SUV && stack[Engine_Q] == TOYOTA) {

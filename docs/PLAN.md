@@ -36,14 +36,16 @@
 
 ## Phase 2 — Unit Test 작성 (리팩토링 전 안전망)
 
-> 기존 `Assemble.java` 코드 기준. 리팩토링 후 테스트가 깨지면 안전망 역할.
+> 기존 `Assemble.java` 코드 기준.
+> ⚠️ 현재 테스트(`AssembleTest.java`)는 `stack`, `isValidCheck()` 등 구현 세부사항에 직접 결합 — **리팩토링 내성 없음**.
+> Phase 5 완료 후 `CompatibilityCheckerTest.java`(행동 기반)로 교체 예정. 현재는 커버리지 확보용 임시 안전망.
 
 ### 2-1. 테스트 클래스 생성
 - [x] `src/test/java/AssembleTest.java` 생성
 - [x] `@BeforeEach` 에서 `stack` 초기화 방법 결정
   - `stack`, `isValidCheck()`, `runProducedCar()` → `package-private` 으로 변경
 
-### 2-2. 호환성 실패 케이스 테스트
+### 2-2. 호환성 실패 케이스 테스트 (isValidCheck)
 - [x] `sedan_with_continental_brake_fails`
 - [x] `suv_with_toyota_engine_fails`
 - [x] `truck_with_wia_engine_fails`
@@ -54,10 +56,24 @@
 - [x] `valid_combination_passes`
 - [x] `broken_engine_does_not_run`
 
-### 2-4. 테스트 실행 및 Coverage 측정
+### 2-4. 테스트 실행 및 Coverage 측정 (1차)
 - [x] `./gradlew test` — 7개 전체 통과
 - [x] `./gradlew jacocoTestReport` 실행
-- [x] baseline coverage: Instructions 11%, Branches 16%
+- [x] 1차 coverage: Instructions 11%, Branches 16% — 너무 낮음
+
+### 2-5. Coverage 보강 (isValidRange, testProducedCar, runProducedCar 추가)
+- [x] `isValidRange()` → `package-private` 변경
+- [x] `testProducedCar()` → `package-private` 변경
+- [x] `isValidRange()` 테스트 — 각 step별 유효/무효 범위
+  - [x] CarType: 유효(1~3), 무효(0, 4)
+  - [x] Engine: 유효(0~4), 무효(5)
+  - [x] BrakeSystem: 유효(0~3), 무효(4)
+  - [x] SteeringSystem: 유효(0~2), 무효(3)
+  - [x] RunTest: 유효(0~2), 무효(3)
+- [x] `testProducedCar()` 테스트 — 5개 FAIL + 1개 PASS
+- [x] `runProducedCar()` 성공/실패/고장 경로 출력 확인
+- [x] `./gradlew test` 전체 통과 (25개)
+- [x] coverage 재측정: Instructions 47%, Branches 51%
 
 ---
 
@@ -112,10 +128,11 @@
 - [ ] 기존 `isValidCheck()` 제거
 - [ ] 기존 `testProducedCar()` 중복 규칙 제거 → `CompatibilityChecker` 사용
 
-### 5-3. CompatibilityChecker 테스트 작성
+### 5-3. CompatibilityChecker 테스트 작성 (행동 기반 — 리팩토링 내성 있음)
 - [ ] `src/test/java/rule/CompatibilityCheckerTest.java`
-  - Phase 2 테스트 케이스 동일하게 이전
-  - 각 규칙별 독립 테스트
+  - `Car` 객체 기준 — `stack` 직접 접근 없음
+  - 각 규칙별 독립 테스트 (5개 FAIL + 1개 PASS)
+- [ ] 기존 `AssembleTest.java` 제거 (구현 결합 임시 테스트)
 - [ ] `./gradlew test` 통과 확인
 
 ---

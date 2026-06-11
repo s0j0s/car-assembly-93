@@ -160,9 +160,10 @@
 - [x] 3줄로 축소 (`new CarAssembler(new ConsoleUI(new Scanner(System.in))).run()`)
 
 ### 6-4. CarAssemblerTest 추가
-- [x] `src/test/java/service/CarAssemblerTest.java` (StubUI, 7개 테스트)
+- [x] `src/test/java/service/CarAssemblerTest.java` (StubUI, 12개 테스트 — BasicFlow/RunPath/TestPath/BackNavigation 4 Nested)
+- [x] `src/test/java/model/CarTest.java` 추가 (3개 테스트 — isFullyConfigured/reset)
 - [x] `./gradlew test` 전체 통과
-- [x] coverage: Instructions 76%, Branches 68%
+- [x] coverage: Instructions 81%, Branches 80%
 
 ---
 

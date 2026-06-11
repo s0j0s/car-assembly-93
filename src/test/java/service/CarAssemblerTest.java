@@ -1,5 +1,7 @@
 package service;
 
+import model.Car;
+import rule.CompatibilityChecker;
 import ui.ConsoleUI;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -33,7 +35,7 @@ class CarAssemblerTest {
     }
 
     private CarAssembler assembler(StubUI stub) {
-        return new CarAssembler(stub) {
+        return new CarAssembler(stub, new CompatibilityChecker(), new Car()) {
             @Override protected void delay(int ms) {}
         };
     }

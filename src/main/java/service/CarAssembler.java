@@ -1,5 +1,6 @@
 package service;
 
+import lombok.RequiredArgsConstructor;
 import model.*;
 import rule.CompatibilityChecker;
 import ui.ConsoleUI;
@@ -7,6 +8,7 @@ import ui.ConsoleUI;
 import java.util.Arrays;
 import java.util.List;
 
+@RequiredArgsConstructor
 public class CarAssembler {
     private static final int CarType_Q        = 0;
     private static final int Engine_Q         = 1;
@@ -14,15 +16,9 @@ public class CarAssembler {
     private static final int SteeringSystem_Q = 3;
     private static final int Run_Test         = 4;
 
-    private final ConsoleUI ui;
+    private final ConsoleUI           ui;
     private final CompatibilityChecker checker;
-    private final Car car;
-
-    public CarAssembler(ConsoleUI ui) {
-        this.ui      = ui;
-        this.checker = new CompatibilityChecker();
-        this.car     = new Car();
-    }
+    private final Car                 car;
 
     public void run() {
         int step = CarType_Q;
@@ -65,19 +61,19 @@ public class CarAssembler {
             switch (step) {
                 case CarType_Q:
                     car.setCarType(CarType.values()[answer - 1]);
-                    ui.printf("차량 타입으로 %s을 선택하셨습니다.%n", car.getCarType().displayName);
+                    ui.printf("차량 타입으로 %s을 선택하셨습니다.%n", car.getCarType().getDisplayName());
                     delay(800); step = Engine_Q; break;
                 case Engine_Q:
                     car.setEngine(Engine.values()[answer - 1]);
-                    ui.printf("%s 엔진을 선택하셨습니다.%n", car.getEngine().displayName);
+                    ui.printf("%s 엔진을 선택하셨습니다.%n", car.getEngine().getDisplayName());
                     delay(800); step = BrakeSystem_Q; break;
                 case BrakeSystem_Q:
                     car.setBrakeSystem(BrakeSystem.values()[answer - 1]);
-                    ui.printf("%s 제동장치를 선택하셨습니다.%n", car.getBrakeSystem().displayName);
+                    ui.printf("%s 제동장치를 선택하셨습니다.%n", car.getBrakeSystem().getDisplayName());
                     delay(800); step = SteeringSystem_Q; break;
                 case SteeringSystem_Q:
                     car.setSteeringSystem(SteeringSystem.values()[answer - 1]);
-                    ui.printf("%s 조향장치를 선택하셨습니다.%n", car.getSteeringSystem().displayName);
+                    ui.printf("%s 조향장치를 선택하셨습니다.%n", car.getSteeringSystem().getDisplayName());
                     delay(800); step = Run_Test; break;
                 case Run_Test:
                     if (answer == 1) {
@@ -162,10 +158,10 @@ public class CarAssembler {
             ui.print("자동차가 움직이지 않습니다.");
             return;
         }
-        ui.printf("Car Type : %s%n", car.getCarType().displayName);
-        ui.printf("Engine   : %s%n", car.getEngine().displayName);
-        ui.printf("Brake    : %s%n", car.getBrakeSystem().displayName);
-        ui.printf("Steering : %s%n", car.getSteeringSystem().displayName);
+        ui.printf("Car Type : %s%n", car.getCarType().getDisplayName());
+        ui.printf("Engine   : %s%n", car.getEngine().getDisplayName());
+        ui.printf("Brake    : %s%n", car.getBrakeSystem().getDisplayName());
+        ui.printf("Steering : %s%n", car.getSteeringSystem().getDisplayName());
         ui.print("자동차가 동작됩니다.");
     }
 
@@ -187,16 +183,9 @@ public class CarAssembler {
         }
     }
 
-    private static <T extends Enum<T>> String[] namesOf(T[] values) {
+    private static <T extends Displayable> String[] namesOf(T[] values) {
         return Arrays.stream(values)
-            .map(e -> {
-                try {
-                    return (String) e.getClass().getField("displayName").get(e);
-                } catch (Exception ex) {
-                    throw new IllegalStateException(
-                        e.getClass().getSimpleName() + " enum에 displayName 필드 없음", ex);
-                }
-            })
+            .map(Displayable::getDisplayName)
             .toArray(String[]::new);
     }
 }

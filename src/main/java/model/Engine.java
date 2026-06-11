@@ -1,16 +1,17 @@
 package model;
 
-public enum Engine {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public enum Engine implements Displayable {
     GM("GM"),
     TOYOTA("TOYOTA"),
     WIA("WIA"),
     BROKEN("고장난 엔진");
 
-    public final String displayName;
-
-    Engine(String displayName) {
-        this.displayName = displayName;
-    }
+    private final String displayName;
 
     public boolean isBroken() {
         return this == BROKEN;

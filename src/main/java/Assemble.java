@@ -1,3 +1,5 @@
+import model.Car;
+import rule.CompatibilityChecker;
 import service.CarAssembler;
 import ui.ConsoleUI;
 
@@ -5,6 +7,10 @@ import java.util.Scanner;
 
 public class Assemble {
     public static void main(String[] args) {
-        new CarAssembler(new ConsoleUI(new Scanner(System.in))).run();
+        new CarAssembler(
+            new ConsoleUI(new Scanner(System.in)),
+            new CompatibilityChecker(),
+            new Car()
+        ).run();
     }
 }

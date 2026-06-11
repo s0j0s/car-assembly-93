@@ -1,12 +1,13 @@
 package model;
 
-public enum SteeringSystem {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public enum SteeringSystem implements Displayable {
     BOSCH("Bosch"),
     MOBIS("Mobis");
 
-    public final String displayName;
-
-    SteeringSystem(String displayName) {
-        this.displayName = displayName;
-    }
+    private final String displayName;
 }

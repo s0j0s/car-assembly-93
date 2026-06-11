@@ -1,13 +1,14 @@
 package model;
 
-public enum BrakeSystem {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@Getter
+@RequiredArgsConstructor
+public enum BrakeSystem implements Displayable {
     MANDO("Mando"),
     CONTINENTAL("Continental"),
     BOSCH("Bosch");
 
-    public final String displayName;
-
-    BrakeSystem(String displayName) {
-        this.displayName = displayName;
-    }
+    private final String displayName;
 }

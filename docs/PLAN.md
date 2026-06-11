@@ -145,23 +145,24 @@
 ## Phase 6 — UI / Service 분리
 
 ### 6-1. ConsoleUI 클래스
-- [ ] `src/main/java/ui/ConsoleUI.java`
-  - `displayMenu(String title, String[] options)` — 공통 메뉴 출력
-  - `readInput(Scanner sc)` — 입력 처리
-  - 기존 `show*Menu()` 4개 메서드 통합
+- [x] `src/main/java/ui/ConsoleUI.java`
+  - `displayMenu`, `displayMenuWithBack` — 공통 메뉴 출력 (show*Menu 4개 통합)
+  - `readLine()` — "INPUT > " 포함 입력 처리
+  - `printCarBanner()`, `clearScreen()`, `print()`, `printf()`
 
 ### 6-2. CarAssembler 서비스
-- [ ] `src/main/java/service/CarAssembler.java`
+- [x] `src/main/java/service/CarAssembler.java`
   - `run()` — 전체 조립 흐름 제어
-  - `ConsoleUI` 생성자 주입 (테스트 용이성)
-  - 기존 `main()` 89줄 로직 이전
+  - `ConsoleUI` 생성자 주입
+  - `delay()` protected — 테스트 시 override 가능
 
 ### 6-3. Assemble.java 진입점 정리
-- [ ] `main()` — `new CarAssembler(new ConsoleUI()).run()` 만 남기기
-- [ ] `InterruptedException` → `Thread.currentThread().interrupt()` 복원
+- [x] 3줄로 축소 (`new CarAssembler(new ConsoleUI(new Scanner(System.in))).run()`)
 
-### 6-4. 전체 동작 검증
-- [ ] `./gradlew run` — 실제 실행 확인
+### 6-4. CarAssemblerTest 추가
+- [x] `src/test/java/service/CarAssemblerTest.java` (StubUI, 7개 테스트)
+- [x] `./gradlew test` 전체 통과
+- [x] coverage: Instructions 76%, Branches 68%
 
 ---
 

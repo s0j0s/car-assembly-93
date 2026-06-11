@@ -1,14 +1,13 @@
 package ui;
 
+import lombok.RequiredArgsConstructor;
+
 import java.util.Scanner;
 
+@RequiredArgsConstructor
 public class ConsoleUI {
     private static final String CLEAR_SCREEN = "\033[H\033[2J";
     private final Scanner scanner;
-
-    public ConsoleUI(Scanner scanner) {
-        this.scanner = scanner;
-    }
 
     public void clearScreen() {
         System.out.print(CLEAR_SCREEN);

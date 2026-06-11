@@ -126,25 +126,25 @@ public class CarAssembler {
                 break;
             case Engine_Q:
                 if (ans < 0 || ans > Engine.values().length) {
-                    ui.print("ERROR :: 엔진은 1 ~ " + Engine.values().length + " 범위만 선택 가능");
+                    ui.print("ERROR :: 엔진은 0(뒤로가기) 또는 1 ~ " + Engine.values().length + " 범위만 선택 가능");
                     return false;
                 }
                 break;
             case BrakeSystem_Q:
                 if (ans < 0 || ans > BrakeSystem.values().length) {
-                    ui.print("ERROR :: 제동장치는 1 ~ " + BrakeSystem.values().length + " 범위만 선택 가능");
+                    ui.print("ERROR :: 제동장치는 0(뒤로가기) 또는 1 ~ " + BrakeSystem.values().length + " 범위만 선택 가능");
                     return false;
                 }
                 break;
             case SteeringSystem_Q:
                 if (ans < 0 || ans > SteeringSystem.values().length) {
-                    ui.print("ERROR :: 조향장치는 1 ~ " + SteeringSystem.values().length + " 범위만 선택 가능");
+                    ui.print("ERROR :: 조향장치는 0(뒤로가기) 또는 1 ~ " + SteeringSystem.values().length + " 범위만 선택 가능");
                     return false;
                 }
                 break;
             case Run_Test:
                 if (ans < 0 || ans > 2) {
-                    ui.print("ERROR :: Run 또는 Test 중 하나를 선택 필요");
+                    ui.print("ERROR :: 0(처음으로), 1(RUN), 2(Test) 중 선택 필요");
                     return false;
                 }
                 break;
@@ -193,7 +193,8 @@ public class CarAssembler {
                 try {
                     return (String) e.getClass().getField("displayName").get(e);
                 } catch (Exception ex) {
-                    return e.name();
+                    throw new IllegalStateException(
+                        e.getClass().getSimpleName() + " enum에 displayName 필드 없음", ex);
                 }
             })
             .toArray(String[]::new);

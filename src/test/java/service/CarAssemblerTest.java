@@ -134,6 +134,48 @@ class CarAssemblerTest {
         }
     }
 
+    // ── 경계값 입력 ──────────────────────────────────────────────
+
+    @Nested
+    @DisplayName("경계값 / 유효하지 않은 입력")
+    class BoundaryInputs {
+
+        @Test @DisplayName("CarType 단계에서 0 입력 → 에러 메시지 출력")
+        void zero_at_cartype_shows_error() {
+            StubUI stub = new StubUI("0", "exit");
+            assembler(stub).run();
+            assertTrue(stub.outputs.stream().anyMatch(s -> s.startsWith("ERROR ::")));
+        }
+
+        @Test @DisplayName("Engine 단계에서 음수 입력 → 에러 메시지 출력")
+        void negative_at_engine_shows_error() {
+            StubUI stub = new StubUI("1", "-1", "exit");
+            assembler(stub).run();
+            assertTrue(stub.outputs.stream().anyMatch(s -> s.startsWith("ERROR ::")));
+        }
+
+        @Test @DisplayName("Brake 단계에서 음수 입력 → 에러 메시지 출력")
+        void negative_at_brake_shows_error() {
+            StubUI stub = new StubUI("1", "1", "-1", "exit");
+            assembler(stub).run();
+            assertTrue(stub.outputs.stream().anyMatch(s -> s.startsWith("ERROR ::")));
+        }
+
+        @Test @DisplayName("Steering 단계에서 음수 입력 → 에러 메시지 출력")
+        void negative_at_steering_shows_error() {
+            StubUI stub = new StubUI("1", "1", "1", "-1", "exit");
+            assembler(stub).run();
+            assertTrue(stub.outputs.stream().anyMatch(s -> s.startsWith("ERROR ::")));
+        }
+
+        @Test @DisplayName("RunTest 단계에서 음수 입력 → 에러 메시지 출력")
+        void negative_at_runtest_shows_error() {
+            StubUI stub = new StubUI("1", "1", "1", "1", "-1", "exit");
+            assembler(stub).run();
+            assertTrue(stub.outputs.stream().anyMatch(s -> s.startsWith("ERROR ::")));
+        }
+    }
+
     // ── 뒤로가기 전 단계 검증 ─────────────────────────────────────
 
     @Nested

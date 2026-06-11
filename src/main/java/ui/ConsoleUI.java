@@ -32,8 +32,12 @@ public class ConsoleUI {
     }
 
     public void displayMenuWithBack(String question, String[] options) {
+        displayMenuWithBack(question, options, "뒤로가기");
+    }
+
+    public void displayMenuWithBack(String question, String[] options, String zeroLabel) {
         System.out.println(question);
-        System.out.println("0. 뒤로가기");
+        System.out.printf("0. %s%n", zeroLabel);
         for (int i = 0; i < options.length; i++) {
             System.out.printf("%d. %s%n", i + 1, options[i]);
         }

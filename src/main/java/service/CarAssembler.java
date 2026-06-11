@@ -107,7 +107,7 @@ public class CarAssembler {
                 break;
             case Run_Test:
                 ui.displayMenuWithBack("멋진 차량이 완성되었습니다.\n어떤 동작을 할까요?",
-                    new String[]{"RUN", "Test"});
+                    new String[]{"RUN", "Test"}, "처음으로");
                 break;
         }
     }

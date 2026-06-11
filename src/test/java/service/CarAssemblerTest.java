@@ -32,6 +32,7 @@ class CarAssemblerTest {
         @Override public void printCarBanner()                           {}
         @Override public void displayMenu(String q, String[] opts)       {}
         @Override public void displayMenuWithBack(String q, String[] opts) {}
+        @Override public void displayMenuWithBack(String q, String[] opts, String zeroLabel) {}
     }
 
     private CarAssembler assembler(StubUI stub) {

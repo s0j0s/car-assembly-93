@@ -104,14 +104,16 @@
 ## Phase 4 — Car 도메인 모델
 
 ### 4-1. Car 클래스
-- [ ] `src/main/java/model/Car.java`
+- [x] `src/main/java/model/Car.java`
   - 필드: `CarType`, `Engine`, `BrakeSystem`, `SteeringSystem`
   - getter / setter
   - `isFullyConfigured()` — 4개 부품 모두 선택 여부
+  - `reset()` — 처음 화면 복귀 시 상태 초기화
 
 ### 4-2. 기존 `int[] stack` 제거 검증
-- [ ] `Assemble.java` 에서 `stack` → `Car` 객체로 교체
-- [ ] `./gradlew compileJava` 통과 확인
+- [x] `Assemble.java` 에서 `stack` → `Car car` 객체로 교체
+- [x] `AssembleTest.java` — `stack` 접근 → `car` 객체 기준으로 수정
+- [x] `./gradlew test` 25개 전체 통과
 
 ---
 

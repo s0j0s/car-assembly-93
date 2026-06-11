@@ -1,4 +1,5 @@
 import model.BrakeSystem;
+import model.Car;
 import model.CarType;
 import model.Engine;
 import model.SteeringSystem;
@@ -14,7 +15,7 @@ public class Assemble {
     private static final int SteeringSystem_Q = 3;
     private static final int Run_Test         = 4;
 
-    static int[] stack = new int[5];
+    static Car car = new Car();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -25,11 +26,11 @@ public class Assemble {
             System.out.flush();
 
             switch (step) {
-                case CarType_Q:        showCarTypeMenu();    break;
-                case Engine_Q:         showEngineMenu();     break;
-                case BrakeSystem_Q:    showBrakeMenu();      break;
-                case SteeringSystem_Q: showSteeringMenu();   break;
-                case Run_Test:         showRunTestMenu();    break;
+                case CarType_Q:        showCarTypeMenu();   break;
+                case Engine_Q:         showEngineMenu();    break;
+                case BrakeSystem_Q:    showBrakeMenu();     break;
+                case SteeringSystem_Q: showSteeringMenu();  break;
+                case Run_Test:         showRunTestMenu();   break;
             }
 
             System.out.print("INPUT > ");
@@ -57,6 +58,7 @@ public class Assemble {
             if (answer == 0) {
                 if (step == Run_Test) {
                     step = CarType_Q;
+                    car.reset();
                 } else if (step > CarType_Q) {
                     step--;
                 }
@@ -65,13 +67,13 @@ public class Assemble {
 
             switch (step) {
                 case CarType_Q:
-                    selectCarType(answer);   delay(800); step = Engine_Q;         break;
+                    selectCarType(answer);        delay(800); step = Engine_Q;         break;
                 case Engine_Q:
-                    selectEngine(answer);    delay(800); step = BrakeSystem_Q;    break;
+                    selectEngine(answer);         delay(800); step = BrakeSystem_Q;    break;
                 case BrakeSystem_Q:
-                    selectBrakeSystem(answer); delay(800); step = SteeringSystem_Q; break;
+                    selectBrakeSystem(answer);    delay(800); step = SteeringSystem_Q; break;
                 case SteeringSystem_Q:
-                    selectSteeringSystem(answer); delay(800); step = Run_Test;    break;
+                    selectSteeringSystem(answer); delay(800); step = Run_Test;         break;
                 case Run_Test:
                     if (answer == 1) {
                         runProducedCar();
@@ -172,27 +174,27 @@ public class Assemble {
     }
 
     private static void selectCarType(int a) {
-        stack[CarType_Q] = a;
-        System.out.printf("차량 타입으로 %s을 선택하셨습니다.%n", CarType.values()[a - 1].displayName);
+        car.setCarType(CarType.values()[a - 1]);
+        System.out.printf("차량 타입으로 %s을 선택하셨습니다.%n", car.getCarType().displayName);
     }
     private static void selectEngine(int a) {
-        stack[Engine_Q] = a;
-        System.out.printf("%s 엔진을 선택하셨습니다.%n", Engine.values()[a - 1].displayName);
+        car.setEngine(Engine.values()[a - 1]);
+        System.out.printf("%s 엔진을 선택하셨습니다.%n", car.getEngine().displayName);
     }
     private static void selectBrakeSystem(int a) {
-        stack[BrakeSystem_Q] = a;
-        System.out.printf("%s 제동장치를 선택하셨습니다.%n", BrakeSystem.values()[a - 1].displayName);
+        car.setBrakeSystem(BrakeSystem.values()[a - 1]);
+        System.out.printf("%s 제동장치를 선택하셨습니다.%n", car.getBrakeSystem().displayName);
     }
     private static void selectSteeringSystem(int a) {
-        stack[SteeringSystem_Q] = a;
-        System.out.printf("%s 조향장치를 선택하셨습니다.%n", SteeringSystem.values()[a - 1].displayName);
+        car.setSteeringSystem(SteeringSystem.values()[a - 1]);
+        System.out.printf("%s 조향장치를 선택하셨습니다.%n", car.getSteeringSystem().displayName);
     }
 
     static boolean isValidCheck() {
-        CarType        carType = stack[CarType_Q] > 0        ? CarType.values()[stack[CarType_Q] - 1]               : null;
-        Engine         engine  = stack[Engine_Q] > 0         ? Engine.values()[stack[Engine_Q] - 1]                 : null;
-        BrakeSystem    brake   = stack[BrakeSystem_Q] > 0    ? BrakeSystem.values()[stack[BrakeSystem_Q] - 1]       : null;
-        SteeringSystem steer   = stack[SteeringSystem_Q] > 0 ? SteeringSystem.values()[stack[SteeringSystem_Q] - 1] : null;
+        CarType        carType = car.getCarType();
+        Engine         engine  = car.getEngine();
+        BrakeSystem    brake   = car.getBrakeSystem();
+        SteeringSystem steer   = car.getSteeringSystem();
 
         if (carType == CarType.SEDAN && brake  == BrakeSystem.CONTINENTAL) return false;
         if (carType == CarType.SUV   && engine == Engine.TOYOTA)           return false;
@@ -207,24 +209,23 @@ public class Assemble {
             System.out.println("자동차가 동작되지 않습니다");
             return;
         }
-        Engine engine = Engine.values()[stack[Engine_Q] - 1];
-        if (engine.isBroken()) {
+        if (car.getEngine().isBroken()) {
             System.out.println("엔진이 고장나있습니다.");
             System.out.println("자동차가 움직이지 않습니다.");
             return;
         }
-        System.out.printf("Car Type : %s%n", CarType.values()[stack[CarType_Q] - 1].displayName);
-        System.out.printf("Engine   : %s%n", engine.displayName);
-        System.out.printf("Brake    : %s%n", BrakeSystem.values()[stack[BrakeSystem_Q] - 1].displayName);
-        System.out.printf("Steering : %s%n", SteeringSystem.values()[stack[SteeringSystem_Q] - 1].displayName);
+        System.out.printf("Car Type : %s%n", car.getCarType().displayName);
+        System.out.printf("Engine   : %s%n", car.getEngine().displayName);
+        System.out.printf("Brake    : %s%n", car.getBrakeSystem().displayName);
+        System.out.printf("Steering : %s%n", car.getSteeringSystem().displayName);
         System.out.println("자동차가 동작됩니다.");
     }
 
     static void testProducedCar() {
-        CarType        carType = stack[CarType_Q] > 0        ? CarType.values()[stack[CarType_Q] - 1]               : null;
-        Engine         engine  = stack[Engine_Q] > 0         ? Engine.values()[stack[Engine_Q] - 1]                 : null;
-        BrakeSystem    brake   = stack[BrakeSystem_Q] > 0    ? BrakeSystem.values()[stack[BrakeSystem_Q] - 1]       : null;
-        SteeringSystem steer   = stack[SteeringSystem_Q] > 0 ? SteeringSystem.values()[stack[SteeringSystem_Q] - 1] : null;
+        CarType        carType = car.getCarType();
+        Engine         engine  = car.getEngine();
+        BrakeSystem    brake   = car.getBrakeSystem();
+        SteeringSystem steer   = car.getSteeringSystem();
 
         if (carType == CarType.SEDAN && brake == BrakeSystem.CONTINENTAL) {
             fail("Sedan에는 Continental제동장치 사용 불가");

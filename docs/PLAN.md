@@ -5,32 +5,32 @@
 ## Phase 1 — Gradle 프로젝트 세팅
 
 ### 1-1. Gradle Wrapper 생성
-- [ ] `gradle/wrapper/gradle-wrapper.properties` 생성 (Gradle 8.x)
-- [ ] `gradle/wrapper/gradle-wrapper.jar` 생성
-- [ ] `gradlew`, `gradlew.bat` 생성
+- [x] `gradle/wrapper/gradle-wrapper.properties` 생성 (Gradle 9.3.0)
+- [x] `gradle/wrapper/gradle-wrapper.jar` 생성
+- [x] `gradlew`, `gradlew.bat` 생성
 
 ### 1-2. 빌드 스크립트 작성
-- [ ] `settings.gradle` 생성 (`rootProject.name = 'assemblyCar'`)
-- [ ] `build.gradle` 생성
-  - [ ] `java` 플러그인, `application` 플러그인
-  - [ ] `sourceCompatibility = 17`
-  - [ ] `mainClass = 'Assemble'`
-  - [ ] JUnit 5 의존성 (`junit-jupiter`)
-  - [ ] JaCoCo 플러그인
+- [x] `settings.gradle` 생성 (`rootProject.name = 'assemblyCar'`)
+- [x] `build.gradle` 생성
+  - [x] `java` 플러그인, `application` 플러그인
+  - [x] `sourceCompatibility = 17`
+  - [x] `mainClass = 'Assemble'`
+  - [x] JUnit 5 의존성 (`junit-jupiter`)
+  - [x] JaCoCo 플러그인
 
 ### 1-3. 디렉토리 구조 재편
-- [ ] `src/main/java/` 생성
-- [ ] `src/test/java/` 생성
-- [ ] `java/Assemble.java` → `src/main/java/Assemble.java` 이동
-- [ ] `java/` 폴더 제거
+- [x] `src/main/java/` 생성
+- [x] `src/test/java/` 생성
+- [x] `java/Assemble.java` → `src/main/java/Assemble.java` 이동
+- [x] `java/` 폴더 제거
 
 ### 1-4. .gitignore 업데이트
-- [ ] `.gradle/` 추가
-- [ ] `build/` 추가
+- [x] `.gradle/` 추가
+- [x] `build/` 추가
 
 ### 1-5. 빌드 검증
-- [ ] `./gradlew compileJava` — 컴파일 확인
-- [ ] `./gradlew run` — 실행 확인
+- [x] `./gradlew compileJava` — 컴파일 확인
+- [x] `./gradlew run` — 실행 확인
 
 ---
 

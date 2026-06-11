@@ -170,26 +170,26 @@
 ## Phase 7 — 최종 검증 및 Commit
 
 ### 7-1. 테스트 및 Coverage 최종 확인
-- [ ] `./gradlew test` — 전체 통과 확인
-- [ ] `./gradlew jacocoTestReport` — coverage 측정
-- [ ] Phase 2 baseline 대비 coverage 향상 확인
+- [x] `./gradlew test` — 27개 전체 통과 (CarTest 3, CompatibilityCheckerTest 12, CarAssemblerTest 12)
+- [x] `./gradlew jacocoTestReport` — coverage 측정
+- [x] Phase 2 baseline 대비 coverage 향상 확인 (Instructions 11% → 81%, Branches 16% → 80%)
 
 ### 7-2. 코드 스멜 체크리스트
-- [ ] God Class 해소 (4개 클래스 분리)
-- [ ] Primitive Obsession 해소 (enum + Car)
-- [ ] Data Clump 해소 (Car 객체)
-- [ ] Long Method 해소 (main → CarAssembler.run())
-- [ ] Switch Statements 해소 (enum 메서드 위임)
-- [ ] Duplicate Code 해소 (메뉴, 이름 매핑, 규칙)
-- [ ] Divergent Change 해소 (CompatibilityChecker)
-- [ ] Magic Numbers 해소 (Engine.BROKEN)
-- [ ] Dead Code 해소 (InterruptedException)
+- [x] God Class 해소 (`model/`, `rule/`, `service/`, `ui/` 4개 패키지 분리)
+- [x] Primitive Obsession 해소 (enum 4개 + `Car` 객체)
+- [x] Data Clump 해소 (`stack[0..3]` → `Car` 단일 도메인 모델)
+- [x] Long Method 해소 (`main()` 3줄 → `CarAssembler.run()` 위임)
+- [x] Switch Statements 해소 (`ConsoleUI.displayMenu/displayMenuWithBack`, enum length 활용)
+- [x] Duplicate Code 해소 (메뉴: `ConsoleUI` 공통화, 이름: `displayName` 필드, 규칙: `CompatibilityChecker`)
+- [x] Divergent Change 해소 (`CompatibilityChecker.RULES` 한 곳만 수정)
+- [x] Magic Numbers 해소 (`Engine.BROKEN`)
+- [x] Dead Code 해소 (`Thread.currentThread().interrupt()` 복원)
 
 ### 7-3. 빌드 산출물 확인
-- [ ] `build/`, `.gradle/` `.gitignore` 반영 여부 확인
-- [ ] `src/test/java/` 테스트 파일 커밋 포함 확인
+- [x] `build/`, `.gradle/` `.gitignore` 반영 확인
+- [x] `src/test/java/` 테스트 파일 커밋 포함 확인
 
 ### 7-4. Commit & Push
-- [ ] `git add` 스테이징
-- [ ] commit 메시지 작성
-- [ ] `git push`
+- [x] `git add` 스테이징
+- [x] commit 메시지 작성
+- [x] `git push`
